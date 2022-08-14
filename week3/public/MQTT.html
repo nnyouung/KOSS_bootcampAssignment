@@ -1,0 +1,85 @@
+<!DOCTYPE html> <!--html 선언-->
+<html> <!--html 시작-->
+  <head> <!--head 시작-->
+    <meta charset="utf-8" /> <!--유니코드 사용-->
+    <title>IOT</title> <!--웹페이지 타이틀 설정-->
+
+    <!--자바 스크립트 시작-->
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+      var socket = null; //socket 선언 및 초기화
+      $; //jquery
+      var timer = null; //timer 선언 및 초기화
+      $(document).ready(function () {
+        socket = io.connect(); // 3000port
+        // Node.js보낸 데이터를 수신하는 부분
+        socket.on("socket_evt_mqtt", function (data) {
+          data = JSON.parse(data);
+          console.log(data);
+          $(".mqttlist").html(
+            "<li>" +
+              " tmp: " +
+              data.tmp +
+              "°C" + //온도 출력
+              " hum: " +
+              data.hum +
+              "%" + //습도 출력
+              " pm1: " +
+              data.pm1 + //pm1 값 출력
+              " pm2.5: " +
+              data.pm2 + //pm2.5 값 출력
+              " pm10: " +
+              data.pm10 + //pm10 값 출력
+              "</li>"
+          );
+        });
+
+        //timer가 null이면 1초(1000)마다 time1 함수 실행
+        if (timer == null) {
+          timer = window.setInterval("timer1()", 1000);
+        }
+      });
+      function timer1() { //time1 함수 시작
+        socket.emit("socket_evt_mqtt", JSON.stringify({}));
+        console.log("---------"); //콘솔에 메세지 출력
+      }
+      function ledOnOff(value) { //ledOnOff 함수 시작
+        // {"led":1}, {"led":2}
+        socket.emit("socket_evt_led", JSON.stringify({ led: Number(value) }));
+      }
+      function ajaxledOnOff(value) { //ajaxledOnOff 함수 시작
+        if (value == "1") var value = "on"; //value가 1이면 on
+        else if (value == "2") var value = "off"; //value가 2이면 off
+        $.ajax({ //jquery 객체인 ajax 함수 시작
+          url: "http://localhost:3000/devices/led", //local url
+          type: "post", //post 방식으로
+          data: { flag: value },
+          success: ledStatus, //성공 시, ledStatus 함수 실행
+          error: function () { //실패 시, 에러 알림 출력
+            alert("error");
+          },
+        });
+      }
+      function ledStatus(obj) { //ledStatus 함수 시작
+        $("#led").html("<font color='red'>" + obj.led + "</font> 되었습니다."); //led 출력
+      }
+    </script>
+    <!--자바 스크립트 종료-->
+  </head> <!--head 종료-->
+  <body> <!--body 시작(웹페이지에 보여지는 부분)-->
+    <h2>socket 이용한 센서 모니터링 서비스</h2>
+    <div id="msg">
+      <div id="mqtt_logs">
+        <ul class="mqttlist"></ul>
+      </div>
+      <h2>socket 통신 방식(LED제어)</h2>
+      <button onclick="ledOnOff(1)">LED_ON</button>
+      <button onclick="ledOnOff(2)">LED_OFF</button>
+      <h2>RESTfull Service 통신 방식(LED제어)</h2>
+      <button onclick="ajaxledOnOff(1)">LED_ON</button>
+      <button onclick="ajaxledOnOff(2)">LED_OFF</button>
+      <div id="led">LED STATUS</div>
+    </div>
+  </body> <!--body 종료-->
+</html> <!--html 종료-->
