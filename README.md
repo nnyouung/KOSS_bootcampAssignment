@@ -285,7 +285,7 @@ class MyApp(QMainWindow):
       li = []
       ti = []
       #DB의 sensors에서 정보를 찾아 뒤에서부터 10개의 정보(최근 정보) 가져오기
-      for d, cnt in zip(db['sensors'].find(), range(10, 0, -1)):
+      for d, cnt in zip(db['sensors'].find().sort('created_at', -1), range(10, 0, -1)):
         li.append(int(d['pm1'])) #li 리스트에 미세먼지 정보 저장
         ti2 = str(d['created_at']) #시간 정보를 가져와 string 형태로 저장
         #ti2 변수를 11번째 문자부터(=날짜를 제외한 시간 정보만 가져오기 위해) ti 리스트에 저장
