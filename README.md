@@ -3,7 +3,7 @@
 ### 1-1. app.js
 ```js
 const express = require("express"); //express 모듈 불러오기
-const app = express();
+const app = express(); //
 const path = require("path"); //path 모듈 불러오기
 const bodyParser = require("body-parser"); //body-parser 모듈 불러오기
 const mqtt = require("mqtt"); //mqtt 모듈 불러오기
@@ -203,8 +203,6 @@ module.exports = router; //export로 router 내보내기
 </html> <!--html 종료-->
 ```
 
-## 2. 구현 영상
-
 - - -
 
 # 4주차 과제: PyQT5를 이용해 실내 미세먼지 데이터 시각화하기
@@ -318,5 +316,3 @@ if __name__ == '__main__':
   #무한루프되고 있는 app 상태에서, system의 x버튼을 누르면 실행되고 있는 app을 종료
   sys.exit(app.exec_())
   ```
-  
-  ## 2. 구현 영상
