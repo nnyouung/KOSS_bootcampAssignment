@@ -203,11 +203,16 @@ module.exports = router; //export로 router 내보내기
 </html> <!--html 종료-->
 ```
 
+<br/>
+
 ## 2. 구현영상
 https://user-images.githubusercontent.com/104901660/185309141-69fbd3a5-7343-4978-bfef-5ec7e09119a2.mp4
 
+<br/><br/>
 
 - - -
+
+<br/><br/>
 
 # 4주차 과제: PyQT5를 이용해 실내 미세먼지 데이터 시각화하기
 ## 1. 소스코드 및 코드 설명
