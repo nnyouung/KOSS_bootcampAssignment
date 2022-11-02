@@ -12,8 +12,8 @@ from matplotlib.figure import Figure
 from pymongo import MongoClient
 
 #MongoClient의 값으로 MongoDB 서버 URI를 입력
-client = MongoClient("mongodb+srv://eun:gk101009!!!@cluster0.98cftdx.mongodb.net/eun?retryWrites=true&w=majority")
-db = client['eun'] #DB에 접근하기 위해 'DB명'을 변수에 지정
+client = MongoClient("mongodb+srv://DB명:비밀번호!!!@cluster0.98cftdx.mongodb.net/DB명?retryWrites=true&w=majority")
+db = client['DB명'] #DB에 접근하기 위해 'DB명'을 변수에 지정
 
 class MyApp(QMainWindow):
   def __init__(self): #python의 생성자명은 __init__ 고정이며, 반드시 첫 번째 인수로 self를 지정
